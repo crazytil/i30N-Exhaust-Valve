@@ -2,7 +2,7 @@ This is the code and designs for the i30N Exhaust Valve control module.
 
 This is produced by TBURG Performance and Matt.T.
 
-Bult using:
+Built using:
 - Flutter
 - Arduino IDE
 - aRest by marcoschwartz
