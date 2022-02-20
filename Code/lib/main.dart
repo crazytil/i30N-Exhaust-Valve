@@ -35,17 +35,23 @@ class _ApplicationState extends State<Application> {
     );
 
     return MaterialApp(
+        theme: ThemeData(
+            scaffoldBackgroundColor: Colors.white,
+            appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.black //here you can give the text color
+                )),
         title: 'TBURG Exhaust Control',
         home: Builder(
             builder: (context) => Scaffold(
                   appBar: AppBar(
                     title: const Text('Exhaust Control'),
-                    backgroundColor: Colors.yellow,
+                    elevation: 0,
                     actions: <Widget>[
                       IconButton(
                         icon: Icon(
                           Icons.settings,
-                          color: Colors.white,
+                          color: Colors.black,
                         ),
                         onPressed: () {
                           Navigator.push(
