@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:async_loader/async_loader.dart';
@@ -6,21 +7,21 @@ import 'package:http/http.dart' as http;
 import 'package:v1/settings.dart';
 
 void main() {
-  runApp(application());
+  runApp(Application());
 }
 
-class application extends StatefulWidget {
-  const application({Key? key}) : super(key: key);
+class Application extends StatefulWidget {
+  const Application({Key? key}) : super(key: key);
 
   @override
-  _applicationState createState() => _applicationState();
+  _ApplicationState createState() => _ApplicationState();
 }
 
 double initial = 0;
 String initialvalueString = "";
 bool mode = false;
 
-class _applicationState extends State<application> {
+class _ApplicationState extends State<Application> {
   int exhaust = 0;
 
   @override
@@ -29,8 +30,8 @@ class _applicationState extends State<application> {
       initState: () async => await getMessage(),
       renderLoad: () => CircularProgressIndicator(),
       renderError: ([error]) =>
-          new Text('Sorry, there was an error loading your joke'),
-      renderSuccess: ({data}) => exhaustopen(),
+          const Text('Sorry, there was an error loading your joke'),
+      renderSuccess: ({data}) => ExhaustOpen(),
     );
 
     return MaterialApp(
@@ -70,11 +71,11 @@ changeExhaust(int pwm) async {
   pwm = (pwm * 2.55).round();
   try {
     http.Response response =
-        await http.get("http://192.168.3.30/analog/16/$pwm");
+        await http.get(Uri.parse("http://192.168.3.30/analog/16/$pwm"));
     final jsonData = jsonDecode(response.body);
-    print(jsonData);
+    return jsonData;
   } catch (err) {
-    print(err);
+    return err;
   }
 }
 
@@ -82,29 +83,29 @@ getMessage() async {
   const start = 'return_value": ';
   const end = ",";
   try {
-    http.Response response = await http.get("http://192.168.3.30/analog/16");
+    http.Response response =
+        await http.get(Uri.parse("http://192.168.3.30/analog/16"));
     final responses = response.body;
     final startIndex = responses.indexOf(start);
     final endIndex = responses.indexOf(end, startIndex + start.length);
     initialvalueString =
         responses.substring(startIndex + start.length, endIndex);
     initial = double.parse(initialvalueString) / 2.55;
-    print(initial);
   } catch (err) {
-    print(err);
+    return err;
   }
 
   return (initial);
 }
 
-class exhaustopen extends StatefulWidget {
-  const exhaustopen({Key? key}) : super(key: key);
+class ExhaustOpen extends StatefulWidget {
+  const ExhaustOpen({Key? key}) : super(key: key);
 
   @override
-  _exhaustopenState createState() => _exhaustopenState();
+  _ExhaustOpenState createState() => _ExhaustOpenState();
 }
 
-class _exhaustopenState extends State<exhaustopen> {
+class _ExhaustOpenState extends State<ExhaustOpen> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -122,7 +123,6 @@ class _exhaustopenState extends State<exhaustopen> {
                 onPressed: () {
                   setState(() {
                     mode = !mode;
-                    print(mode);
                   });
                 },
                 style: ElevatedButton.styleFrom(
@@ -139,7 +139,7 @@ class _exhaustopenState extends State<exhaustopen> {
                 customColors: CustomSliderColors(
                     shadowColor: Colors.grey,
                     trackColor: Colors.black,
-                    progressBarColor: Color(0xffe7e300)),
+                    progressBarColor: const Color(0xffe7e300)),
               ),
               onChangeEnd: (double value) {
                 changeExhaust(value.toInt());
