@@ -5,6 +5,7 @@ import 'package:async_loader/async_loader.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:v1/settings.dart';
+import 'package:flutter_blue/flutter_blue.dart';
 
 void main() {
   runApp(Application());
@@ -86,8 +87,6 @@ changeExhaust(int pwm) async {
 }
 
 getMessage() async {
-  FlutterBlue flutterBlue = FlutterBlue.instance;
-
   // const start = 'return_value": ';
   // const end = ",";
   // try {
