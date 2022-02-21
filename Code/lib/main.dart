@@ -74,10 +74,10 @@ class _ApplicationState extends State<Application> {
 }
 
 changeExhaust(int pwm) async {
-  pwm = (pwm * 2.55).round();
+  //pwm = (pwm * 2.55).round();
   try {
     http.Response response =
-        await http.get(Uri.parse("http://192.168.3.30/analog/16/$pwm"));
+        await http.get(Uri.parse("http://192.168.1.22/analog/16/$pwm"));
     final jsonData = jsonDecode(response.body);
     return jsonData;
   } catch (err) {
@@ -86,22 +86,24 @@ changeExhaust(int pwm) async {
 }
 
 getMessage() async {
-  const start = 'return_value": ';
-  const end = ",";
-  try {
-    http.Response response =
-        await http.get(Uri.parse("http://192.168.3.30/analog/16"));
-    final responses = response.body;
-    final startIndex = responses.indexOf(start);
-    final endIndex = responses.indexOf(end, startIndex + start.length);
-    initialvalueString =
-        responses.substring(startIndex + start.length, endIndex);
-    initial = double.parse(initialvalueString) / 2.55;
-  } catch (err) {
-    return err;
-  }
+  FlutterBlue flutterBlue = FlutterBlue.instance;
 
-  return (initial);
+  // const start = 'return_value": ';
+  // const end = ",";
+  // try {
+  //   http.Response response =
+  //       await http.get(Uri.parse("http://192.168.1.22/analog/16"));
+  //   final responses = response.body;
+  //   final startIndex = responses.indexOf(start);
+  //   final endIndex = responses.indexOf(end, startIndex + start.length);
+  //   initialvalueString =
+  //       responses.substring(startIndex + start.length, endIndex);
+  //   initial = double.parse(initialvalueString) / 2.55;
+  // } catch (err) {
+  //   return err;
+  // }
+
+  // return (initial);
 }
 
 class ExhaustOpen extends StatefulWidget {
@@ -138,6 +140,7 @@ class _ExhaustOpenState extends State<ExhaustOpen> {
             ),
           ),
           SleekCircularSlider(
+              max: 255,
               initialValue: initial,
               appearance: CircularSliderAppearance(
                 angleRange: 240,
