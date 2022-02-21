@@ -1,12 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:convert';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:async_loader/async_loader.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:http/http.dart' as http;
 import 'package:v1/settings.dart';
-import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
-import 'DiscoveryPage.dart';
 
 void main() {
   runApp(Application());
@@ -59,7 +58,7 @@ class _ApplicationState extends State<Application> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const DiscoveryPage()));
+                                  builder: (context) => const SettingsPage()));
                         },
                       )
                     ],
