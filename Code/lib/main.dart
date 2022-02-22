@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors
 import 'dart:convert';
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:async_loader/async_loader.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -75,7 +74,7 @@ class _ApplicationState extends State<Application> {
 }
 
 changeExhaust(int pwm) async {
-  //pwm = (pwm * 2.55).round();
+  pwm = (pwm * 2.55).round();
   try {
     http.Response response =
         await http.get(Uri.parse("http://192.168.1.22/analog/16/$pwm"));
@@ -87,22 +86,22 @@ changeExhaust(int pwm) async {
 }
 
 getMessage() async {
-  // const start = 'return_value": ';
-  // const end = ",";
-  // try {
-  //   http.Response response =
-  //       await http.get(Uri.parse("http://192.168.1.22/analog/16"));
-  //   final responses = response.body;
-  //   final startIndex = responses.indexOf(start);
-  //   final endIndex = responses.indexOf(end, startIndex + start.length);
-  //   initialvalueString =
-  //       responses.substring(startIndex + start.length, endIndex);
-  //   initial = double.parse(initialvalueString) / 2.55;
-  // } catch (err) {
-  //   return err;
-  // }
+  const start = 'return_value": ';
+  const end = ",";
+  try {
+    http.Response response =
+        await http.get(Uri.parse("http://192.168.1.22/analog/16"));
+    final responses = response.body;
+    final startIndex = responses.indexOf(start);
+    final endIndex = responses.indexOf(end, startIndex + start.length);
+    initialvalueString =
+        responses.substring(startIndex + start.length, endIndex);
+    initial = double.parse(initialvalueString) / 2.55;
+  } catch (err) {
+    return err;
+  }
 
-  // return (initial);
+  return (initial);
 }
 
 class ExhaustOpen extends StatefulWidget {
@@ -139,7 +138,7 @@ class _ExhaustOpenState extends State<ExhaustOpen> {
             ),
           ),
           SleekCircularSlider(
-              max: 255,
+              max: 100,
               initialValue: initial,
               appearance: CircularSliderAppearance(
                 angleRange: 240,
